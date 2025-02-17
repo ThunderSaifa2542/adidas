@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
-  
-  get bottomNavigationBar => null;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +92,8 @@ class ShopScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Image.asset(
-               'assets/1.jpg',
+                'assets/1.jpg', // Make sure you have this image in your assets
+                fit: BoxFit.cover, // Important: Use BoxFit.cover to fill the container
               ),
             ),
 
@@ -123,42 +122,28 @@ class ShopScreen extends StatelessWidget {
             // Bottom Icons Grid
             Padding(
               padding: const EdgeInsets.all(1.0),
-  child: GridView.count(
-    crossAxisCount: 2, // ปรับจำนวนคอลัมน์ตามต้องการ
-    mainAxisSpacing: 1,
-    crossAxisSpacing: 1,
-    shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(), // ป้องกันการเลื่อนภายใน GridView
-    children: const [
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.local_offer),
-          Text('SALE'),
-        ],
-      ),
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.directions_run),
-          Text('SPORT'),
-        ],
-      ),
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.trending_up),
-          Text('NEW & TRENDING'),
-        ],
-      ),
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.card_giftcard),
-          Text('GIFT CARDS'),
-        ],
-                  ),
-                ],
+              child: GridView.builder( // Use GridView.builder for more efficient rendering
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(), // Important: Disable scrolling within GridView
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio:5///adst aspect ratio for better fit
+                ),
+                itemCount: 4, // Number of grid items
+                itemBuilder: (BuildContext context, int index) {
+                  final icons = [Icons.local_offer, Icons.directions_run, Icons.trending_up, Icons.card_giftcard];
+                  final texts = ['SALE', 'SPORT', 'NEW & TRENDING', 'GIFT CARDS'];
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(icons[index], size: 32),
+                      const SizedBox(height: 4),
+                      Text(texts[index], style: const TextStyle(fontSize: 12)),
+                    ],
+                  );
+                },
               ),
             ),
           ],
@@ -167,19 +152,19 @@ class ShopScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black,),
+            icon: Icon(Icons.home, color: Colors.black),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black,),
+            icon: Icon(Icons.search, color: Colors.black),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border, color: Colors.black,),
+            icon: Icon(Icons.favorite_border, color: Colors.black),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag, color: Colors.black,),
+            icon: Icon(Icons.shopping_bag, color: Colors.black),
             label: '',
           ),
         ],
